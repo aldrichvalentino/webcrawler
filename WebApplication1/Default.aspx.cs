@@ -104,8 +104,21 @@ namespace WebApplication1
                     }
                     else
                     {//Regex
+                        String[] keyelements = Regex.Split(keyword, "[ ,]");
+                        string str ="";
+                        int i;
+                        for (i = 0;i < keyelements.Length;i++) {
+                            char temp;
+                            if (keyelements[i][0] >= 97) {
+                                temp = (char)(keyelements[i][0] - 32);
+                            }else if (keyelements[i][0] <= 90){
+                                temp = (char)(keyelements[i][0] + 32);
+                            }
+                            str = "[" + temp + keyelements[i][0] + "]" +;
+                        }
+                        Match mj = Regex.Match(art.Title, keyword);
                         Match m = Regex.Match(art.Content, keyword);
-                        if (m.Success)
+                        if ((m.Success)||(mj.Success))
                         {
                             finalfeeds.Add(html);
                         }
