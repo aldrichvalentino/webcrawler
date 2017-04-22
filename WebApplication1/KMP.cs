@@ -12,7 +12,7 @@ namespace WebApplication1
 
         private void longestPrefix(int[] lp, int len)
         {
-            int lp[0] = 0;
+            lp[0] = 0;
             int i = 1;
             int j = 0;
 

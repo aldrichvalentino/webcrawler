@@ -10,9 +10,9 @@ namespace WebApplication1
         private string pattern;
         private string text;
 
-        private static int[] lastOccurance()
+        private int[] lastOccurance()
         {
-            int lo = new int[128];
+            int[] lo = new int[128];
             for (int i = 0; i < 128; i++)
             {
                 lo[i] = -1;
@@ -24,13 +24,13 @@ namespace WebApplication1
             return lo;
         }
 
-        public static int boyerMooreSearch()
+        public int[] boyerMooreSearch()
         {
             List<int> ret = new List<int>();
             int len_text = text.Length;
             int len_pattern = pattern.Length;
 
-            int last_occurance[] = lastOccurance();
+            int[] last_occurance = lastOccurance();
             int begining_pattern_it = 0;
 
             while (begining_pattern_it <= len_text - len_pattern)
@@ -43,7 +43,7 @@ namespace WebApplication1
                 }
                 if (ending_pattern_it >= 0) //still need to compare
                 {
-                    int skip_pattern = ending_pattern_it - last_occurance[text[begining_pattern_it + ending_pattern_it]]
+                    int skip_pattern = ending_pattern_it - last_occurance[text[begining_pattern_it + ending_pattern_it]];
                     begining_pattern_it += Math.Max(1, skip_pattern);
                 }
                 else
