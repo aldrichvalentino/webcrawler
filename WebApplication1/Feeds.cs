@@ -11,5 +11,6 @@ namespace WebApplication1
         public string Link { get; set; }
         public string Description { get; set; }
         public bool ContainsKeyword { get; set; }
+        public string KeyWordSentence { get; set; }
     }
 }
