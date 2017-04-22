@@ -45,7 +45,8 @@ namespace WebApplication1
                                  {
                                      title = x.Element("title").Value,
                                      link = x.Element("link").Value,
-                                     description = x.Element("description").Value
+                                     description = x.Element("description").Value,
+                                     containsKey = false
                                  });
                     if (items != null)
                     {
@@ -55,7 +56,8 @@ namespace WebApplication1
                             {
                                 Title = i.title,
                                 Link = i.link,
-                                Description = i.description
+                                Description = i.description,
+                                ContainsKeyword = i.containsKey
                             };
 
                             feeds.Add(h);
