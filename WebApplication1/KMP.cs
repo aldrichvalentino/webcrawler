@@ -12,7 +12,7 @@ namespace WebApplication1
 
         private void longestPrefix(int[] lp, int len)
         {
-            int lp[0] = 0;
+            lp[0] = 0;
             int i = 1;
             int j = 0;
 
@@ -54,7 +54,7 @@ namespace WebApplication1
             int lenPattern = pattern.Length;
             int[] lp = new int[lenPattern];
 
-            longestPrefix(int lp, lenPattern);
+            longestPrefix(lp, lenPattern);
 
             while (j < lenText)
             {

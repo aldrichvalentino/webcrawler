@@ -4,8 +4,16 @@
     <h3>Web Crawl</h3>
     <asp:Label ID="SearchLabel" runat="server" Text="Input your keyword: "></asp:Label>
     <asp:TextBox ID="TextBox" runat="server"></asp:TextBox>
-    <asp:Button ID="SearchButton" runat="server" Text="Search" OnClick="Page_Load"/>
-
+    <asp:Button ID="SearchButton" runat="server" Text="Search" OnClick="SearchButton_Click"/>
+    <br>
+    <br>
+    <h4>Search Algorithm</h4>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="KMPRadioButton" runat="server" Text="KMP"></asp:RadioButton>
+    <br>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="BMRadioButton" runat="server" Text="Boyer Moore"></asp:RadioButton>
+    <br>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="RegexRadioButton" runat="server" Text="Regular Expression"></asp:RadioButton>
+    <br>
     <div style="max-height:350px; overflow:auto">
         <asp:GridView ID="theRss" runat="server" AutoGenerateColumns="false" ShowHeader="false" Width="90%" BorderWidth="0">
             <Columns>

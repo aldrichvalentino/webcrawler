@@ -10,9 +10,9 @@ namespace WebApplication1
         private string pattern;
         private string text;
 
-        private static int[] lastOccurance()
+        private int[] lastOccurance()
         {
-            int lo = new int[128];
+            int[] lo = new int[128];
             for (int i = 0; i < 128; i++)
             {
                 lo[i] = -1;

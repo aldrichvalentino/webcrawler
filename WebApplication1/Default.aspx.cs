@@ -17,19 +17,19 @@ namespace WebApplication1
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
-                parserXML();
+                parserXML(TextBox.Text);
             }
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            parserXML();
-            
+            parserXML(TextBox.Text);
         }
 
-        public void parserXML()
+        public void parserXML(string keyword)
         {
             List<String> rssUrl = new List<string>();
             rssUrl.Add("http://rss.detik.com/index.php/detikcom");
@@ -77,24 +77,32 @@ namespace WebApplication1
                     HtmlWeb page = new HtmlWeb();
                     var doc = page.Load(html.Link);
 
-                    HtmlNode currentNode = doc.DocumentNode.SelectSingleNode("//div[@class='detail_text'][@id='detikdetailtext']");
-                    if (currentNode != null) {
-                        art.Content = currentNode.InnerHtml;
-                        finalfeeds.Add(html);
+                    HtmlNode currentNodeTitle = doc.DocumentNode.SelectSingleNode("//title");
+                    if (currentNodeTitle != null){
+                        art.Title = currentNodeTitle.InnerHtml;
                     }
-                    /*String text = page.DownloadString(html.Link);
-                    Article art = new Article();
-                    Match m = Regex.Match(text, "<title>(.*)<\/title>");
-                    art.Title = m.Value;
-                    Match m2 = Regex.Match(text, "id=\"detikdetailtext\"*<b>*</b>");
-                    art.Content = m2.Value;
-                    if (m.Success)
-                    {
-                        html.ContainsKeyword = true;
-                        finalfeeds.Add(html);
-                    }*/
+                    HtmlNode currentNodeDetik = doc.DocumentNode.SelectSingleNode("//div[@class='detail_text'][@id='detikdetailtext']");
+                    HtmlNode currentNodeTempo = doc.DocumentNode.SelectSingleNode("//p");
+                    //HtmlNode currentNodeViva = doc.DocumentNode.SelectSingleNode("//div[@class='detail_text'][@id='detikdetailtext']");
+                    HtmlNode currentNodeAntara = doc.DocumentNode.SelectSingleNode("//div[@class='content_news'][@itemprop='articleBody']");
+                    if (currentNodeDetik != null) {
+                        art.Content = currentNodeDetik.InnerHtml;                        
+                    }else if (currentNodeTempo != null){
+                        art.Content = currentNodeTempo.InnerHtml;                        
+                    }else if (currentNodeDetik != null){
+                        art.Content = currentNodeAntara.InnerHtml;
+                    }
+
+                    //Algoritma pencarian
+                    //Regex
+                    Match m = Regex.Match(art.Content,keyword);
+                    if (m.Success) {
+                      finalfeeds.Add(html);
+                    }
+                    //KMP
+                    //BM
                 }
-                
+
                 theRss.DataSource = finalfeeds;
                 theRss.DataBind();
             }

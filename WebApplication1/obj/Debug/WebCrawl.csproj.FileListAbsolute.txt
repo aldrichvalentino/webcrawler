@@ -159,3 +159,6 @@ C:\Users\hp\Desktop\webcrawler\WebApplication1\obj\Debug\WebCrawl.csprojResolveA
 C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\HtmlAgilityPack.dll
 C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\HtmlAgilityPack.pdb
 C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\HtmlAgilityPack.xml
+C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\NReadability.dll
+C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\SgmlReaderDll.dll
+C:\Users\hp\Desktop\webcrawler\WebApplication1\bin\NReadability.xml
