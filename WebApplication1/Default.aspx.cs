@@ -15,7 +15,7 @@ namespace WebApplication1
         {
             if (!IsPostBack)
             {
-                SearchButton.Click += new EventHandler(this.SearchButton_Click);
+                parserXML();
             }
         }
 
