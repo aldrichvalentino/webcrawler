@@ -94,13 +94,22 @@ namespace WebApplication1
                     }
 
                     //Algoritma pencarian
-                    //Regex
-                    Match m = Regex.Match(art.Content,keyword);
-                    if (m.Success) {
-                      finalfeeds.Add(html);
+                    if (KMPRadioButton.Checked == true)
+                    {
+                        //KMP
                     }
-                    //KMP
-                    //BM
+                    else if (BMRadioButton.Checked == true)
+                    {
+                        //BM
+                    }
+                    else
+                    {//Regex
+                        Match m = Regex.Match(art.Content, keyword);
+                        if (m.Success)
+                        {
+                            finalfeeds.Add(html);
+                        }
+                    }
                 }
 
                 theRss.DataSource = finalfeeds;

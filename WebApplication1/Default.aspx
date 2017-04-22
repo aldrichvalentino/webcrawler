@@ -8,11 +8,11 @@
     <br>
     <br>
     <h4>Search Algorithm</h4>
-    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="KMPRadioButton" runat="server" Text="KMP"></asp:RadioButton>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="KMPRadioButton" runat="server" Text="KMP" GroupName ="SearchMode"></asp:RadioButton>
     <br>
-    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="BMRadioButton" runat="server" Text="Boyer Moore"></asp:RadioButton>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="BMRadioButton" runat="server" Text="Boyer Moore" GroupName ="SearchMode"></asp:RadioButton>
     <br>
-    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="RegexRadioButton" runat="server" Text="Regular Expression"></asp:RadioButton>
+    &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="RegexRadioButton" runat="server" Text="Regular Expression" GroupName ="SearchMode"></asp:RadioButton>
     <br>
     <div style="max-height:350px; overflow:auto">
         <asp:GridView ID="theRss" runat="server" AutoGenerateColumns="false" ShowHeader="false" Width="90%" BorderWidth="0">
