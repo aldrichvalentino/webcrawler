@@ -1,4 +1,10 @@
-#bin & obj
-WebApplication1/bin/
-WebApplication1/obj/
+#bin obj dir
+bin/
+obj/
 .vs/
+
+# .dll files
+**/dll
+
+# .pdb files
+**/pdb
