@@ -10,6 +10,12 @@ namespace WebApplication1
         private string pattern;
         private string text;
 
+        public BoyerMoore(string patternInput, string textInput)
+        {
+            pattern = patternInput;
+            text = textInput;
+        }
+
         private int[] lastOccurance()
         {
             int[] lo = new int[128];
@@ -62,35 +68,67 @@ namespace WebApplication1
             }
 
             return ret.ToArray();
-            /*int i = lenPattern - 1;
-
-            if (i > lenText)
-                return -1;
-            int j = lenPattern - 1;
-
-            do
-            {
-                if (pattern[j] == text[i])
-                {
-                    if (j == 0)
-                    {
-                        //MATCH
-                    }
-                    else
-                    {
-                        i--;
-                        j--;
-                    }
-                }
-                else
-                {
-                    int lo = last[text[i]];
-                    i = i + lenPattern - Math.Min(j, 1 + lo);
-                    j = lenPattern - 1;
-                }
-            } while (i <= lenText - 1);
-            return -1;
-            */
         }
+
+        public String getBoyerMooreResult()
+        {
+            int[] resultArray = boyerMooreSearch();
+            int result = -1;
+            foreach (int it in resultArray)
+            {
+                result = it;
+            }
+            int leftOffset = 20;
+            int rightOffset = 20;
+            if (result == -1)
+            {
+                return "not found";
+            }
+            else
+            {
+                char[] temp = new char[leftOffset + rightOffset + 1];
+                for (int it = 0; it < temp.Length; it++)
+                {
+                    temp[it] = '\0';
+                }
+                int i = result - leftOffset;
+                int j = result + rightOffset;
+
+                if (i < 0)
+                {
+                    i = 0;
+                }
+
+                if (j > text.Length - 1)
+                {
+                    j = text.Length - 1;
+                }
+
+                for (int k = i; k <= j; k++)
+                {
+                    temp[k - i] = text[k];
+                }
+
+                if (i != 0)
+                {
+                    temp[0] = '.';
+                    temp[1] = '.';
+                    temp[2] = '.';
+                }
+
+                if (j != text.Length - 1)
+                {
+                    int k = temp.Length - 1;
+                    while (k >= 0 && temp[k] == '\0') k--;
+                    temp[k] = '.';
+                    temp[k - 1] = '.';
+                    temp[k - 2] = '.';
+                }
+                //String a = new String(temp);
+                return new String(temp);
+            }
+        }
+
+
     }
 }

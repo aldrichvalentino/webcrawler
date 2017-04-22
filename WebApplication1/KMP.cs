@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace WebApplication1
 {
@@ -45,7 +44,7 @@ namespace WebApplication1
             text = _text;
         }
 
-        public void KMPsearch()
+        public int KMPsearch()
         {
             int i = 0; //iterator pattern
             int j = 0; //iterator text
@@ -67,10 +66,7 @@ namespace WebApplication1
                 if (i == lenPattern) //complete matched string
                 {
                     i = lp[i - 1];
-                    /*
-                     * <what to do?>
-                     * 
-                     * */
+                    return j - lenPattern + 1;
                 }
                 else
                 {
@@ -84,11 +80,69 @@ namespace WebApplication1
                         {
                             j++;
                         }
+
                     }
+
                 }
 
             }
+            return -1;
         }
+
+        public String getKMPResult()
+        {
+            int result = KMPsearch();
+            int leftOffset = 20;
+            int rightOffset = 20;
+            if (result == -1)
+            {
+                return "not found";
+            }
+            else
+            {
+                char[] temp = new char[leftOffset + rightOffset + 1];
+                for (int it = 0; it < temp.Length; it++)
+                {
+                    temp[it] = '\0';
+                }
+                int i = result - leftOffset;
+                int j = result + rightOffset;
+
+                if (i < 0)
+                {
+                    i = 0;
+                }
+
+                if (j > text.Length - 1)
+                {
+                    j = text.Length - 1;
+                }
+
+                for (int k = i; k <= j; k++)
+                {
+                    temp[k - i] = text[k];
+                }
+
+                if (i != 0)
+                {
+                    temp[0] = '.';
+                    temp[1] = '.';
+                    temp[2] = '.';
+                }
+
+                if (j != text.Length - 1)
+                {
+                    int k = temp.Length - 1;
+                    while (k >= 0 && temp[k] == '\0') k--;
+                    temp[k] = '.';
+                    temp[k - 1] = '.';
+                    temp[k - 2] = '.';
+                }
+                //String a = new String(temp);
+                return new String(temp);
+            }
+        }
+
 
     }
 }
