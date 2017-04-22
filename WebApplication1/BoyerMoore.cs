@@ -23,5 +23,10 @@ namespace WebApplication1
             }
             return lo;
         }
+
+        public void boyerMooreSearch()
+        {
+
+        }
     }
 }
