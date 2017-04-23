@@ -96,7 +96,18 @@ namespace WebApplication1
             int rightOffset = 20;
             if (result == -1)
             {
-                return "not found";
+                char[] temp = new char[9];
+                temp[0] = 'n';
+                temp[1] = 'o';
+                temp[2] = 't';
+                temp[3] = ' ';
+                temp[4] = 'f';
+                temp[5] = 'o';
+                temp[6] = 'u';
+                temp[7] = 'n';
+                temp[8] = 'd';
+
+                return new String(temp);
             }
             else
             {

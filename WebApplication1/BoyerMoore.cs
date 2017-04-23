@@ -15,7 +15,7 @@ namespace WebApplication1
             pattern = patternInput;
             text = textInput;
         }
-
+        
         private int[] lastOccurance()
         {
             int[] lo = new int[128];
@@ -29,6 +29,19 @@ namespace WebApplication1
             }
             return lo;
         }
+        /*
+        private void lastOccurance(ref int[] lo)
+        {
+            
+            for (int i = 0; i < 32; i++)
+            {
+                lo[i] = -1;
+            }
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                lo[(int)pattern[i]] = i;
+            }
+        }*/
 
         public int[] boyerMooreSearch()
         {
@@ -36,9 +49,13 @@ namespace WebApplication1
             int len_text = text.Length;
             int len_pattern = pattern.Length;
 
+            
             int[] last_occurance = lastOccurance();
             int begining_pattern_it = 0;
-
+            
+            //int[] last_occurance = new int[32];
+            //lastOccurance(ref last_occurance);
+            //int begining_pattern_it = 0;
             while (begining_pattern_it <= len_text - len_pattern)
             {
                 int ending_pattern_it = len_pattern - 1;
@@ -124,8 +141,11 @@ namespace WebApplication1
                     temp[k - 1] = '.';
                     temp[k - 2] = '.';
                 }
+                String a = new String(temp);
+                //string finstr = new string(temp);
+
                 //String a = new String(temp);
-                return new String(temp);
+                return a;
             }
         }
 
