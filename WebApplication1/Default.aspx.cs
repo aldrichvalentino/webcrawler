@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * File : Default.aspx.cs
+ * Author : AAR
+ * Aldrich Valentino H. - 13515081
+ * Roland Hartanto - 13515107
+ * M. Akmal Pratama - 13515135
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,27 +17,33 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using Subgurim.Controles;
 
 namespace WebApplication1
 {
     public partial class _Default : Page
     {
-
+        //Me-load halaman
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                parserXML(TextBox.Text);
+                search(TextBox.Text);
             }
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            parserXML(TextBox.Text);
+            search(TextBox.Text);
         }
 
-        public void parserXML(string keyword)
+        /**
+         * I.S. : keyword terdefinisi, rss dan html terdefinisi 
+         * F.S. : List dengan berita yang sesuai dengan kata kunci
+         */
+        public void search(string keyword)
         {
+            //menyimpan rss ke dalam list
             List<String> rssUrl = new List<string>();
             rssUrl.Add("http://rss.detik.com/index.php/detikcom");
             //rssUrl.Add("http://tempo.co/rss/terkini");
@@ -39,11 +53,9 @@ namespace WebApplication1
 
             try
             {
+                //membaca (parsing) rss
                 foreach (var it in rssUrl)
                 {
-                    //HttpWebRequest webreq = (HttpWebRequest) WebRequest.Create(it.ToString());
-                    //webreq.KeepAlive = true;
-                    //webreq.ProtocolVersion = HttpVersion.Version10;
                     XDocument docs = new XDocument();
                     try
                     {
@@ -79,6 +91,7 @@ namespace WebApplication1
                     }
                 }
 
+                //membaca html untuk setiap feed yang diperoleh dari rss
                 List<Feeds> finalfeeds = new List<Feeds>();
                 foreach (var html in feeds)
                 {
@@ -87,12 +100,13 @@ namespace WebApplication1
                     try
                     {
                         var doc = page.Load(html.Link);
-
+                        //memfilter konten judul
                         HtmlNode currentNodeTitle = doc.DocumentNode.SelectSingleNode("//title");
                         if (currentNodeTitle != null)
                         {
                             art.Title = currentNodeTitle.InnerHtml;
                         }
+                        //memfilter konten artikel
                         HtmlNode currentNodeDetik = doc.DocumentNode.SelectSingleNode("//div[@class='detail_text'][@id='detikdetailtext']");
                         HtmlNode currentNodeTempo = doc.DocumentNode.SelectSingleNode("//p");
                         HtmlNode currentNodeViva = doc.DocumentNode.SelectSingleNode("//span[@itemprop='description']");
@@ -113,9 +127,9 @@ namespace WebApplication1
                             art.Content = currentNodeViva.InnerHtml;
                         }
 
-                        //Algoritma pencarian
+                        //pencarian kata kunci dalam konten artikel dan judul
                         if (KMPRadioButton.Checked == true)
-                        {
+                        {//KMP
                             KMP K1 = new KMP(keyword, art.Content);
                             KMP K2 = new KMP(keyword, art.Title);
                             String result1 = K1.getKMPResult();
@@ -124,19 +138,19 @@ namespace WebApplication1
                             {
                                 if (!result2.Equals("not found"))
                                 {
-                                    html.Description = result2;
+                                    html.Description = html.Description + "<br> <br>" + result2;
                                 }
                                 else
                                 {
-                                    html.Description = result1;
+                                    html.Description = html.Description +"<br> <br>"+ result1;
                                 }
 
                                 finalfeeds.Add(html);
                             }
                         }
                         else if (BMRadioButton.Checked == true)
-                        {
-                            BoyerMoore B1 = new BoyerMoore(keyword, art.Content);//blm diganti
+                        {//Boyer Moore
+                            BoyerMoore B1 = new BoyerMoore(keyword, art.Content);
                             BoyerMoore B2 = new BoyerMoore(keyword, art.Title);
                             String result1 = B1.getBoyerMooreResult();
                             String result2 = B2.getBoyerMooreResult();
@@ -144,11 +158,11 @@ namespace WebApplication1
                             {
                                 if (!result2.Equals("not found", StringComparison.Ordinal))
                                 {
-                                    html.Description = result2;
+                                    html.Description = html.Description + "<br> <br>" + result2;
                                 }
                                 else
                                 {
-                                    html.Description = result1;
+                                    html.Description = html.Description + "<br> <br>" + result1;
                                 }
 
                                 finalfeeds.Add(html);
@@ -156,33 +170,35 @@ namespace WebApplication1
                         }
                         else if (RegexRadioButton.Checked == true)
                         {//Regex
-                         /* String[] keyelements = Regex.Split(keyword, "[ ,]");
-                          //String str = new String(" ");
-                          int i;
-                          for (i = 0;i < keyelements.Length;i++) {
-                              char temp;
-                              if (keyelements[i][0] >= 97) {
-                                  temp = (char)(keyelements[i][0] - 32);
-                              }else if (keyelements[i][0] <= 90){
-                                  temp = (char)(keyelements[i][0] + 32);
-                              }
-                             // str = "[" + temp + keyelements[i][0] + "]" +;
-                          }*/
-                            Match mj = Regex.Match(art.Title, keyword);
-                            Match m = Regex.Match(art.Content, keyword);
+                            string newKeyWord = keyword.Replace(" ","(.*)");
+                            Match mj = Regex.Match(art.Title, newKeyWord, RegexOptions.IgnoreCase);
+                            Match m = Regex.Match(art.Content, newKeyWord, RegexOptions.IgnoreCase);
                             if ((m.Success) || (mj.Success))
                             {
+                                string desc;
+                                if (m.Success) {
+                                    desc = "...";
+                                    if (m.Index - 50 >= 0) {
+                                        desc = desc + art.Content.Substring(m.Index-50,50);
+                                    }
+                                    desc = desc + "<b>" + art.Content.Substring(m.Index,m.Length) + "</b>";
+                                    if (art.Content.Length - 1 - (m.Index + m.Length - 1) >= 50) {
+                                        desc = desc + art.Content.Substring(m.Index + m.Length, 50);
+                                    }
+                                    desc = desc + "...";
+                                    html.Description = html.Description + "<br> <br>" + desc;
+                                }
                                 finalfeeds.Add(html);
                             }
                         }
                         else
                         {
-                            //do nothing
+                            //do nothing bila tidak memilih mode pencarian/saat awal halaman di-load
                         }
                     }
                     catch (Exception e) { }
                 }
-
+                
                 theRss.DataSource = finalfeeds;
                 theRss.DataBind();
             }

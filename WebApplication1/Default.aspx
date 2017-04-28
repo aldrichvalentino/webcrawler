@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication1._Default" %>
 
+<%@ Register assembly="GMaps" namespace="Subgurim.Controles" tagprefix="cc1" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h3>Web Crawl</h3>
     <asp:Label ID="SearchLabel" runat="server" Text="Input your keyword: "></asp:Label>
@@ -13,6 +15,8 @@
     &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="BMRadioButton" runat="server" Text="Boyer Moore" GroupName ="SearchMode"></asp:RadioButton>
     <br>
     &nbsp;&nbsp;&nbsp;<asp:RadioButton ID="RegexRadioButton" runat="server" Text="Regular Expression" GroupName ="SearchMode"></asp:RadioButton>
+    <br />
+    <br />
     <br>
     <div style="max-height:350px; overflow:auto">
         <asp:GridView ID="theRss" runat="server" AutoGenerateColumns="false" ShowHeader="false" Width="90%" BorderWidth="0">

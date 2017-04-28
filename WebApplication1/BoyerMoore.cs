@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * File : BoyerMoore.cs
+ * Author : AAR
+ * Aldrich Valentino H. - 13515081
+ * Roland Hartanto - 13515107
+ * M. Akmal Pratama - 13515135
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,19 +37,6 @@ namespace WebApplication1
             }
             return lo;
         }
-        /*
-        private void lastOccurance(ref int[] lo)
-        {
-            
-            for (int i = 0; i < 32; i++)
-            {
-                lo[i] = -1;
-            }
-            for (int i = 0; i < pattern.Length; i++)
-            {
-                lo[(int)pattern[i]] = i;
-            }
-        }*/
 
         public int[] boyerMooreSearch()
         {
@@ -95,15 +90,15 @@ namespace WebApplication1
             {
                 result = it;
             }
-            int leftOffset = 20;
-            int rightOffset = 20;
+            int leftOffset = 50;
+            int rightOffset = 50;
             if (result == -1)
             {
                 return "not found";
             }
             else
             {
-                char[] temp = new char[leftOffset + rightOffset + 1];
+                char[] temp = new char[leftOffset + rightOffset + 1 +8+pattern.Length];
                 for (int it = 0; it < temp.Length; it++)
                 {
                     temp[it] = '\0';
@@ -120,12 +115,34 @@ namespace WebApplication1
                 {
                     j = text.Length - 1;
                 }
-
+                /*
                 for (int k = i; k <= j; k++)
                 {
                     temp[k - i] = text[k];
+                }*/
+                int m = 0;
+                for (int k = i; k < result-1; k++)
+                {
+                    temp[k - i] = text[k];
                 }
-
+                temp[result-i-1] = '<';
+                temp[result + 1-i-1] = 'b';
+                temp[result + 2-i-1] = '>';
+                int l = result-1;
+                for (int k = result + 3-1; k < result +3+ pattern.Length; k++)
+                {
+                    temp[k-i] = text[l];
+                    l++;
+                }
+                temp[result + 3 + pattern.Length-i] = '<';
+                temp[result + 3 + pattern.Length-i + 1] = '/';
+                temp[result + 3 + pattern.Length-i + 2] = 'b';
+                temp[result + 3 + pattern.Length-i + 3] = '>';
+                for (int k = result + 3 + pattern.Length + 4; k < j; k++)
+                {
+                    temp[k-i] = text[l];
+                    l++;
+                }
                 if (i != 0)
                 {
                     temp[0] = '.';
